@@ -27,7 +27,10 @@ from .config import (
 )
 
 
-def compute_cargo_at_discharge(eps2: float, q_bl_bbl: float = Q_BL_BBL) -> float:
+def compute_cargo_at_discharge(
+    eps2: float,
+    q_bl_bbl: float = Q_BL_BBL,
+) -> float:
     """
     Eq. (13): Q_discharge = Q_BL × (1 − ε₂)
 
@@ -73,8 +76,8 @@ def compute_financing(
     sofr_bl: float,
     eps1_bps: float,
     p_wti_5day: float,
-    q_bl_bbl: float,
     financing_exposure_days: float,
+    q_bl_bbl: float = Q_BL_BBL,
 ) -> float:
     """
     Eq. (7): Financing = (SOFR_BL + ε₁) × (P_WTI · Q_BL) × (exposure / 365)
@@ -163,20 +166,21 @@ def compute_pnl(
     fx_discharge: float,
     eps3: float,
     eps4: float,
+    q_bl_bbl: float = Q_BL_BBL,
 ) -> dict:
     """
     Eq. (1): π = Spread − Freight − Financing − Demurrage − Insurance − Port fees
 
     Returns a dict containing 'pnl' (USD) and each cost component for attribution.
     """
-    q_discharge = compute_cargo_at_discharge(eps2)
+    q_discharge = compute_cargo_at_discharge(eps2, q_bl_bbl)
 
-    spread    = compute_spread(p_brent_5day, q_discharge, p_wti_5day)
+    spread    = compute_spread(p_brent_5day, q_discharge, p_wti_5day, q_bl_bbl)
     freight   = compute_freight(ws_quote, td25_flat_rate)
-    financing = compute_financing(sofr_bl, eps1_bps, p_wti_5day, Q_BL_BBL,
-                                  financing_exposure_days)
+    financing = compute_financing(sofr_bl, eps1_bps, p_wti_5day,
+                                  financing_exposure_days, q_bl_bbl)
     demurrage = compute_demurrage(t_origin_berth_hrs, t_dest_berth_hrs)
-    insurance = compute_insurance(p_wti_5day)
+    insurance = compute_insurance(p_wti_5day, q_bl_bbl)
     port_fees = compute_port_fees(fx_bl, fx_discharge, eps3, eps4)
 
     pnl = spread - freight - financing - demurrage - insurance - port_fees
