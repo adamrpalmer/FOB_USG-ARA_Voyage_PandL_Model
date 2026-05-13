@@ -8,7 +8,15 @@ A decision-support tool for evaluating the profitability of WTI crude arbitrage 
 
 Given live WTI Houston FOB prices and current WTI/Brent spread, the model simulates voyage P&L for a single Aframax shipment across thousands of historical market and operational scenarios. It outputs a P&L distribution, expected value, CVaR at the 5th percentile, and a risk-adjusted go/no-go recommendation based on an EV/CVaR₀.₀₅ ≥ 1.0 decision rule.
 
-The model quantifies the stochastic arithmetic of an unhedged voyage. Basis and counterparty data are excluded due to proprietary data constraints; hedging is excluded because the model targets a risk warehousing trade structure.
+The model quantifies how potential market and operational conditions affect the realised profit of an unhedged voyage. Basis and counterparty data are excluded due to proprietary data constraints; hedging is excluded because the model targets a risk warehousing trade structure.
+
+---
+
+## Commercial Problem
+
+In physical crude markets, benchmark spreads alone do not determine whether a cargo is commercially executable. Instead, realised P&L depends on whether the spread compensates for freight, financing, insurance, port fees, cargo losses and delays incurred between arbitrage decision and settlement.
+
+As market and operational conditions can change significantly within the execution window, voyage P&L is uncertain. The model estimates realised P&L of a structured trade while accounting for market and operational risk.
 
 ---
 
@@ -33,7 +41,7 @@ The model quantifies the stochastic arithmetic of an unhedged voyage. Basis and 
 
 ## Methodology
 
-Stochastic voyage costs are simulated via a Mahalanobis distance matched historical block bootstrap on a time-indexed market data matrix. Each simulation path is anchored to a historically similar WTI level and spread, so the model inherits the empirical joint distribution of market variables without parametric assumptions about their dependence structure.
+Stochastic voyage costs are simulated via a historical block bootstrap on a time-indexed market data matrix. Each simulation path is anchored to a historically similar WTI level and spread, so the model inherits the empirical joint distribution of market variables without parametric assumptions about their dependence structure.
 
 The simulation algorithm traces six operationally significant nodes according to the trade timeline through the market data matrix — from arbitrage decision to settlement — reading market and operational variables at each based on the trade structure. Variables unavailable for bootstrapping due to confidentiality (demurrage, financing spread, port fees, cargo loss) are parametrised with triangular distributions under conservative assumptions.
 
