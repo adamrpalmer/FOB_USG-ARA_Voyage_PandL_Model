@@ -1,14 +1,14 @@
 # FOB USG–ARA Voyage P&L Model
 
-A stochastic decision-support tool for evaluating the commercial viability of WTI crude arbitrage from the US Gulf Coast to Northwest Europe.
+A decision-support tool for evaluating the profitability of WTI crude arbitrage from the US Gulf Coast to Northwest Europe.
 
 ---
 
 ## Overview
 
-Given live WTI Houston FOB prices and the prevailing WTI/Brent spread, the model simulates voyage P&L for a single Aframax shipment across thousands of historical market and operational scenarios. It outputs a P&L distribution, expected value, CVaR at the 5th percentile, and a risk-adjusted go/no-go recommendation based on an EV/CVaR₀.₀₅ ≥ 1.0 decision rule.
+Given live WTI Houston FOB prices and current WTI/Brent spread, the model simulates voyage P&L for a single Aframax shipment across thousands of historical market and operational scenarios. It outputs a P&L distribution, expected value, CVaR at the 5th percentile, and a risk-adjusted go/no-go recommendation based on an EV/CVaR₀.₀₅ ≥ 1.0 decision rule.
 
-The model quantifies the stochastic arithmetic of an unhedged voyage. The trader overlays basis view, hedging strategy, and counterparty assessment on top. Basis and counterparty data are excluded due to proprietary data constraints; hedging is excluded because the model targets a risk warehousing trade structure.
+The model quantifies the stochastic arithmetic of an unhedged voyage. Basis and counterparty data are excluded due to proprietary data constraints; hedging is excluded because the model targets a risk warehousing trade structure.
 
 ---
 
@@ -33,9 +33,9 @@ The model quantifies the stochastic arithmetic of an unhedged voyage. The trader
 
 ## Methodology
 
-Non-deterministic voyage costs are simulated via regime-conditioned historical block bootstrap on a time-indexed market data matrix. Each simulation path is anchored to a historically similar WTI level and spread regime, so the model inherits the empirical joint distribution of market variables without parametric assumptions about their dependence structure.
+Stochastic voyage costs are simulated via a Mahalanobis distance matched historical block bootstrap on a time-indexed market data matrix. Each simulation path is anchored to a historically similar WTI level and spread, so the model inherits the empirical joint distribution of market variables without parametric assumptions about their dependence structure.
 
-The matrix traces six nodes through the trade timeline — from arbitrage decision to settlement — reading market and operational variables at each. Variables unavailable for bootstrapping due to confidentiality (demurrage, financing spread, port fees, cargo loss) are parametrised with triangular distributions under conservative assumptions.
+The simulation algorithm traces six operationally significant nodes according to the trade timeline through the market data matrix — from arbitrage decision to settlement — reading market and operational variables at each based on the trade structure. Variables unavailable for bootstrapping due to confidentiality (demurrage, financing spread, port fees, cargo loss) are parametrised with triangular distributions under conservative assumptions.
 
 Full methodology is documented separately.
 
@@ -76,7 +76,7 @@ outputs/            # Simulation results
 
 ## Status
 
-Active development. t1 selection method and data acquisition are the current workflows; core methodology is complete.
+Methodology complete. Output reporting in progress.
 
 Second-year undergraduate research project — University of Nottingham.
 
