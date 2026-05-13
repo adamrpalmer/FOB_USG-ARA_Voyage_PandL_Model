@@ -1,6 +1,6 @@
 # FOB USG–ARA Voyage P&L Model
 
-A decision-support tool for evaluating the profitability of WTI crude arbitrage from the US Gulf Coast to Northwest Europe.
+A decision-support tool for evaluating the profitability of voyage-level WTI crude arbitrage from the US Gulf Coast to Northwest Europe.
 
 ---
 
@@ -8,7 +8,7 @@ A decision-support tool for evaluating the profitability of WTI crude arbitrage 
 
 Given live WTI Houston FOB prices and current WTI/Brent spread, the model simulates voyage P&L for a single Aframax shipment across thousands of historical market and operational scenarios. It outputs a P&L distribution, expected value, CVaR at the 5th percentile, and a risk-adjusted go/no-go recommendation based on an EV/CVaR₀.₀₅ ≥ 1.0 decision rule.
 
-The model quantifies how potential market and operational conditions affect the realised profit of an unhedged voyage. Basis and counterparty data are excluded due to proprietary data constraints; hedging is excluded because the model targets a risk warehousing trade structure.
+The model quantifies how potential market and operational conditions affect the realised P&L of an unhedged voyage. Basis and counterparty data are excluded due to proprietary data constraints; hedging is excluded because the model targets a risk warehousing trade structure.
 
 ---
 
@@ -16,7 +16,7 @@ The model quantifies how potential market and operational conditions affect the 
 
 In physical crude markets, benchmark spreads alone do not determine whether a cargo is commercially executable. Instead, realised P&L depends on whether the spread compensates for freight, financing, insurance, port fees, cargo losses and delays incurred between arbitrage decision and settlement.
 
-As market and operational conditions can change significantly within the execution window, voyage P&L is uncertain. The model estimates realised P&L of a structured trade while accounting for market and operational risk.
+As market and operational conditions can change significantly within the execution window, voyage P&L is uncertain. The model estimates realised P&L of a structured TD25 crude trade while accounting for market and operational risk.
 
 ---
 
